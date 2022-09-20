@@ -1,5 +1,5 @@
 ﻿using Ardalis.SmartEnum;
-using Discord;
+using DSharpPlus.Entities;
 
 namespace RaidDaddy.Enums;
 
@@ -19,7 +19,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
     #region Properties
     
     public string Name { get;set; }
-    public abstract Color Color { get; }
+    public abstract DiscordColor Color { get; }
     public abstract string BannerImg { get; }
     public abstract List<string> Translations { get; }
     public abstract List<Destiny2Encounter> Encounters { get; }
@@ -39,7 +39,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         {
         }
 
-        public override Color Color => Color.DarkGreen;
+        public override DiscordColor Color => DiscordColor.DarkGreen;
         public override string BannerImg => "";
         public override List<string> Translations => new() { "gos", "garden", "gardenofsalvation" };
         public override List<Destiny2Encounter> Encounters => new()
@@ -57,7 +57,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         {
         }
 
-        public override Color Color => Color.DarkMagenta;
+        public override DiscordColor Color => DiscordColor.Magenta;
         public override string BannerImg => "";
         public override List<string> Translations => new() { "lw", "lastwish" };
         public override List<Destiny2Encounter> Encounters => new()
@@ -77,7 +77,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         {
         }
 
-        public override Color Color => Color.Blue;
+        public override DiscordColor Color => DiscordColor.Blue;
         public override string BannerImg => "";
         public override List<string> Translations => new() { "dsc", "crypt", "deepstonecrypt"};
         public override List<Destiny2Encounter> Encounters => new()
@@ -97,7 +97,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         {
         }
 
-        public override Color Color => Color.Blue;
+        public override DiscordColor Color => DiscordColor.Blue;
         public override string BannerImg => "";
         public override List<string> Translations => new() { "votd", "vow", "disciple", "vowofthedisciple"};
         public override List<Destiny2Encounter> Encounters => new()
@@ -116,7 +116,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         {
         }
 
-        public override Color Color => Color.Gold;
+        public override DiscordColor Color => DiscordColor.Gold;
         public override string BannerImg => "";
         public override List<string> Translations => new() { "vault", "vog", "vaultofglass" };
         public override List<Destiny2Encounter> Encounters => new()
@@ -138,7 +138,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         {
         }
 
-        public override Color Color => Color.DarkRed;
+        public override DiscordColor Color => DiscordColor.DarkRed;
         public override string BannerImg => "";
         public override List<string> Translations => new() { "kf", "fall", "kingsfall", "king" };
         public override List<Destiny2Encounter> Encounters => new()
