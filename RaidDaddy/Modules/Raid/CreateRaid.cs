@@ -4,7 +4,10 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using RaidDaddy.Data.Repositories;
+using RaidDaddy.Entities;
+using RaidDaddy.Enums;
 using RaidDaddy.Extensions;
+using RaidDaddy.Extensions.ToEmbed;
 
 namespace RaidDaddy.Modules.Raid;
 
@@ -23,7 +26,23 @@ public class CreateRaid : ApplicationCommandModule
     public async Task CreateRaidCommand(InteractionContext context,
         [Option("raid", "The raid you want to create")] Raid raid)
     {
-        await context.CreateResponseAsync($"Creating raid {raid.ToRaidString()}");
+        Raider creator = await _raiderRepo.Get(context.User.Id);
+
+        if (creator.CurrentTeam is not null)
+        {
+            await context.CreateResponseAsync("You are already in a fireteam", true);
+            return;
+        }
+        
+        RaidFireteam fireteam = new()
+        {
+            Raid = raid.ToDestiny2Raid(),
+            Date = DateTime.Now,
+            Encounter = Destiny2Encounter.CLEAN
+        };
+        fireteam.Raiders.Add(creator);
+        await _fireteamRepo.Add(fireteam);
+        await context.CreateResponseAsync(fireteam.ToEmbed(), false);
     }
 
     public enum Raid

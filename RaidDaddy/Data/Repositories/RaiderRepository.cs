@@ -19,15 +19,15 @@ public sealed class RaiderRepository
     
     public async Task<List<Raider>> Get()
     {
-        return await _db.Raiders.ToListAsync();
+        return await _db.Raiders.Include(x=>x.CurrentTeam).ToListAsync();
     }
     
-    public async Task<Raider?> Get(int id)
+    public async Task<Raider> Get(ulong id)
     {
-        return await _db.Raiders.FindAsync(id);
+        return await _db.Raiders.Include(x=>x.CurrentTeam).FirstAsync(x => x.Id==id);
     }
 
-    public async Task Create(Raider raider)
+    public async Task Add(Raider raider)
     {
         await _db.Raiders.AddAsync(raider);
         await SaveChanges();
@@ -48,5 +48,10 @@ public sealed class RaiderRepository
     private async Task SaveChanges()
     {
         await _db.SaveChangesAsync();
+    }
+
+    public async Task<bool> Exists(ulong id)
+    {
+        return await _db.Raiders.AnyAsync(x => x.Id == id);
     }
 }

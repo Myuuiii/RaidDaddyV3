@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
 using DSharpPlus;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.DependencyInjection;
 using RaidDaddy.Data;
 using RaidDaddy.Data.Repositories;
+using RaidDaddy.Entities;
 using RaidDaddy.Modules.Raid;
 
 namespace RaidDaddy;
@@ -45,6 +47,8 @@ public sealed class Bot
             Services = _serviceCollection
         });
 
+        _client.MessageCreated += CheckMember;
+
         await _client.ConnectAsync();
         
         _slash.RegisterCommands<CreateRaid>(_guildId);
@@ -54,7 +58,22 @@ public sealed class Bot
         _slash.RegisterCommands<ListRaid>(_guildId);
         _slash.RegisterCommands<ReserveRaid>(_guildId);
         _slash.RegisterCommands<KickRaid>(_guildId);
-
+        _slash.RegisterCommands<SetGuardianInfo>(_guildId);
+        _slash.RegisterCommands<SetTimeRaid>(_guildId);
+        
         await Task.Delay(-1);
+    }
+
+    private async Task CheckMember(DiscordClient sender, MessageCreateEventArgs e)
+    {
+        if (e.Author.IsBot) return;
+        if (!await _rdRepo.Exists(e.Author.Id))
+        {
+            Raider rd = new(e.Author);
+            await _rdRepo.Add(rd);
+        }
+
+        Raider existingRaider = await _rdRepo.Get(e.Author.Id);
+        Console.WriteLine($"{existingRaider.Name} ({existingRaider.Subclass} {existingRaider.Class}) sent a message");
     }
 }

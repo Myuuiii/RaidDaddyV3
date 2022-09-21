@@ -1,4 +1,5 @@
-﻿using RaidDaddy.Modules.Raid;
+﻿using RaidDaddy.Enums;
+using RaidDaddy.Modules.Raid;
 
 namespace RaidDaddy.Extensions;
 

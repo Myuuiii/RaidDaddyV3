@@ -2,9 +2,9 @@
 
 public enum Destiny2Subclass
 {
-    Solar,
-    Arc,
-    Void,
-    Stasis,
-    Strand
+    Solar = 0,
+    Arc = 1,
+    Void = 2,
+    Stasis = 3,
+    Strand = 4
 }

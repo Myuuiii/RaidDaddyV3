@@ -27,7 +27,7 @@ public sealed class FireteamRepository
         return await _db.Fireteams.ToListAsync();
     }
 
-    public async Task Create(RaidFireteam fireteam)
+    public async Task Add(RaidFireteam fireteam)
     {
         await _db.Fireteams.AddAsync(fireteam);
         SaveChanges();
@@ -38,11 +38,16 @@ public sealed class FireteamRepository
         _db.Fireteams.Update(fireteam);
         SaveChanges();
     }
-
+    
     public async Task Delete(Guid id)
     {
         _db.Fireteams.Remove(await Get(id));
         SaveChanges();
+    }
+
+    public async Task<RaidFireteam> GetLatest()
+    {
+        return await _db.Fireteams.OrderByDescending(x => x.Date).FirstAsync();
     }
 
     private async Task SaveChanges()
