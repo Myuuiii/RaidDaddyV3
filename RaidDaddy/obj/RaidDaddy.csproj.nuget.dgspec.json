@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Sync\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj": {}
+    "C:\\Users\\Myuu\\Documents\\Code\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj": {}
   },
   "projects": {
-    "D:\\Sync\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj": {
+    "C:\\Users\\Myuu\\Documents\\Code\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Sync\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj",
+        "projectUniqueName": "C:\\Users\\Myuu\\Documents\\Code\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj",
         "projectName": "RaidDaddy",
-        "projectPath": "D:\\Sync\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj",
+        "projectPath": "C:\\Users\\Myuu\\Documents\\Code\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj",
         "packagesPath": "C:\\Users\\Myuu\\.nuget\\packages\\",
-        "outputPath": "D:\\Sync\\RaidDaddyV3\\RaidDaddy\\obj\\",
+        "outputPath": "C:\\Users\\Myuu\\Documents\\Code\\RaidDaddyV3\\RaidDaddy\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

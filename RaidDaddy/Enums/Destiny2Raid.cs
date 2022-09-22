@@ -1,5 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 using DSharpPlus.Entities;
+using RaidDaddy.Data;
 
 namespace RaidDaddy.Enums;
 
@@ -40,7 +41,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         }
 
         public override DiscordColor Color => DiscordColor.DarkGreen;
-        public override string BannerImg => "";
+        public override string BannerImg => Urls.Base + "gos_raid.png";
         public override List<string> Translations => new() { "gos", "garden", "gardenofsalvation" };
         public override List<Destiny2Encounter> Encounters => new()
         {
@@ -58,7 +59,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         }
 
         public override DiscordColor Color => DiscordColor.Magenta;
-        public override string BannerImg => "";
+        public override string BannerImg => Urls.Base + "lw_raid.png";
         public override List<string> Translations => new() { "lw", "lastwish" };
         public override List<Destiny2Encounter> Encounters => new()
         {
@@ -78,7 +79,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         }
 
         public override DiscordColor Color => DiscordColor.Blue;
-        public override string BannerImg => "";
+        public override string BannerImg => Urls.Base + "dsc_raid.png";
         public override List<string> Translations => new() { "dsc", "crypt", "deepstonecrypt"};
         public override List<Destiny2Encounter> Encounters => new()
         {
@@ -98,7 +99,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         }
 
         public override DiscordColor Color => DiscordColor.Blue;
-        public override string BannerImg => "";
+        public override string BannerImg => Urls.Base + "votd_raid.png";
         public override List<string> Translations => new() { "votd", "vow", "disciple", "vowofthedisciple"};
         public override List<Destiny2Encounter> Encounters => new()
         {
@@ -117,7 +118,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         }
 
         public override DiscordColor Color => DiscordColor.Gold;
-        public override string BannerImg => "";
+        public override string BannerImg => Urls.Base + "vog_raid.png";
         public override List<string> Translations => new() { "vault", "vog", "vaultofglass" };
         public override List<Destiny2Encounter> Encounters => new()
         {
@@ -139,7 +140,7 @@ public abstract class Destiny2Raid : SmartEnum<Destiny2Raid>
         }
 
         public override DiscordColor Color => DiscordColor.DarkRed;
-        public override string BannerImg => "";
+        public override string BannerImg => Urls.Base + "kf_raid.png";
         public override List<string> Translations => new() { "kf", "fall", "kingsfall", "king" };
         public override List<Destiny2Encounter> Encounters => new()
         {

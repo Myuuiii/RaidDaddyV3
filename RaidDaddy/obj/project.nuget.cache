@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GXeI4PtW/CYHi2jkCw/GDx5+AOh8sLBC1Uf+pcfXxD0ffYvrJ2QPyImKHQQlJfgFRnKXl7xmOhlKupwC/ZeSTg==",
+  "dgSpecHash": "TAlrxTKKSDDgqUJFWYtmgLDOarSLtwq8/tHHeh57fckTJu7PfDwd8yP2EX7R7g4XDc7aFYZXoyLhq78xRZ7KBQ==",
   "success": true,
-  "projectFilePath": "D:\\Sync\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj",
+  "projectFilePath": "C:\\Users\\Myuu\\Documents\\Code\\RaidDaddyV3\\RaidDaddy\\RaidDaddy.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Myuu\\.nuget\\packages\\ardalis.smartenum\\2.1.0\\ardalis.smartenum.2.1.0.nupkg.sha512",
     "C:\\Users\\Myuu\\.nuget\\packages\\ardalis.smartenum.efcore\\2.1.0\\ardalis.smartenum.efcore.2.1.0.nupkg.sha512",

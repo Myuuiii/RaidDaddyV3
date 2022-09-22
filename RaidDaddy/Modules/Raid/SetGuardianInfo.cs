@@ -2,6 +2,7 @@
 using RaidDaddy.Data.Repositories;
 using RaidDaddy.Entities;
 using RaidDaddy.Enums;
+using RaidDaddy.Extensions.ToEmbed;
 
 namespace RaidDaddy.Modules.Raid;
 
@@ -20,7 +21,7 @@ public class SetGuardianInfo : ApplicationCommandModule
         Raider raider = await _raiderRepo.Get(context.User.Id);
         raider.Subclass = subclass;
         await _raiderRepo.Update(raider);
-        await context.CreateResponseAsync(content: $"Your subclass has been changed to {subclass}", ephemeral: true);
+        await context.CreateResponseAsync(embed: subclass.ToEmbed(), ephemeral: true);
     }
     
     [SlashCommand("class", "Set your class")]
@@ -29,6 +30,6 @@ public class SetGuardianInfo : ApplicationCommandModule
         Raider raider = await _raiderRepo.Get(context.User.Id);
         raider.Class = d2Class ;
         await _raiderRepo.Update(raider);
-        await context.CreateResponseAsync(content: $"Your class has been changed to {d2Class}", ephemeral: true);
+        await context.CreateResponseAsync(embed: d2Class.ToEmbed(), ephemeral: true);
     }
 }
