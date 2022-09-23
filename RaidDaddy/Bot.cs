@@ -7,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using RaidDaddy.Data;
 using RaidDaddy.Data.Repositories;
 using RaidDaddy.Entities;
+using RaidDaddy.Modules.Guardian;
 using RaidDaddy.Modules.Raid;
+using RaidDaddy.Modules.Role;
 
 namespace RaidDaddy;
 
@@ -20,6 +22,7 @@ public sealed class Bot
     
     private FireteamRepository _ftRepo;
     private RaiderRepository _rdRepo;
+    private RaiderRoleRepository _rdrRepo;
     
     private const ulong _guildId = 887198526579281920;
 
@@ -30,6 +33,8 @@ public sealed class Bot
         _db = new DataContext();
         _ftRepo = new FireteamRepository(_db);        
         _rdRepo = new RaiderRepository(_db);
+        _rdrRepo = new RaiderRoleRepository();
+        
         _client = new DiscordClient(new DiscordConfiguration()
         {
             Token = Environment.GetEnvironmentVariable("token"),
@@ -40,6 +45,7 @@ public sealed class Bot
         _serviceCollection = new ServiceCollection()
             .AddSingleton(_ftRepo)
             .AddSingleton(_rdRepo)
+            .AddSingleton(_rdrRepo)
             .BuildServiceProvider();
 
         _slash = _client.UseSlashCommands(new SlashCommandsConfiguration()
@@ -61,6 +67,7 @@ public sealed class Bot
         _slash.RegisterCommands<SetGuardianInfo>(_guildId);
         _slash.RegisterCommands<SetTimeRaid>(_guildId);
         _slash.RegisterCommands<StartCommand>(_guildId);
+        _slash.RegisterCommands<SetRaiderRole>(_guildId);
         
         await Task.Delay(-1);
     }

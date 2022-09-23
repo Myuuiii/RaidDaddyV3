@@ -4,7 +4,7 @@ using RaidDaddy.Entities;
 using RaidDaddy.Enums;
 using RaidDaddy.Extensions.ToEmbed;
 
-namespace RaidDaddy.Modules.Raid;
+namespace RaidDaddy.Modules.Guardian;
 
 public class SetGuardianInfo : ApplicationCommandModule
 {

@@ -1,4 +1,5 @@
-﻿using DSharpPlus.SlashCommands;
+﻿using System.Threading.Tasks;
+using DSharpPlus.SlashCommands;
 using Microsoft.VisualBasic;
 using RaidDaddy.Data.Repositories;
 using RaidDaddy.Entities;
