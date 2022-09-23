@@ -60,6 +60,7 @@ public sealed class Bot
         _slash.RegisterCommands<KickRaid>(_guildId);
         _slash.RegisterCommands<SetGuardianInfo>(_guildId);
         _slash.RegisterCommands<SetTimeRaid>(_guildId);
+        _slash.RegisterCommands<StartCommand>(_guildId);
         
         await Task.Delay(-1);
     }

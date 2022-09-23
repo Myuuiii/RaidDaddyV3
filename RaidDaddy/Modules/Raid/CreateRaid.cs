@@ -48,16 +48,16 @@ public class CreateRaid : ApplicationCommandModule
     public enum Raid
     {
         [ChoiceName("Garden of Salvation")]
-        GOS,
+        Gos,
         [ChoiceName("Deep Stone Crypt")]
-        DSC,
+        Dsc,
         [ChoiceName("Last Wish")]
-        LW,
+        Lw,
         [ChoiceName("King's Fall")]
-        KF,
+        Kf,
         [ChoiceName("Vow of the Disciple")]
-        VOTD,
+        Votd,
         [ChoiceName("Vault of Glass")]
-        VOG,
+        Vog,
     }
 }
