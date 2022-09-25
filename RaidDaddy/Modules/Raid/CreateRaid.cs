@@ -13,14 +13,16 @@ namespace RaidDaddy.Modules.Raid;
 
 public class CreateRaid : ApplicationCommandModule
 {
-    public CreateRaid(FireteamRepository fireteamRepo, RaiderRepository raiderRepo)
+    public CreateRaid(FireteamRepository fireteamRepo, RaiderRepository raiderRepo, RaiderRoleRepository raiderRole)
     {
         _fireteamRepo = fireteamRepo;
         _raiderRepo = raiderRepo;
+        _raiderRole = raiderRole;
     }
 
     private readonly FireteamRepository _fireteamRepo;
     private readonly RaiderRepository _raiderRepo;
+    private readonly RaiderRoleRepository _raiderRole;
     
     [SlashCommand("create", "Create a new fireteam")]
     public async Task CreateRaidCommand(InteractionContext context,
@@ -42,22 +44,22 @@ public class CreateRaid : ApplicationCommandModule
         };
         fireteam.Raiders.Add(creator);
         await _fireteamRepo.Add(fireteam);
-        await context.CreateResponseAsync(fireteam.ToEmbed(), false);
+        await context.CreateResponseAsync(content: $"{context.User.Username} created a new raid <@&{_raiderRole.GetId()}>", embed:fireteam.ToEmbed(), false);
     }
 
     public enum Raid
     {
         [ChoiceName("Garden of Salvation")]
-        GOS,
+        Gos,
         [ChoiceName("Deep Stone Crypt")]
-        DSC,
+        Dsc,
         [ChoiceName("Last Wish")]
-        LW,
+        Lw,
         [ChoiceName("King's Fall")]
-        KF,
+        Kf,
         [ChoiceName("Vow of the Disciple")]
-        VOTD,
+        Votd,
         [ChoiceName("Vault of Glass")]
-        VOG,
+        Vog,
     }
 }

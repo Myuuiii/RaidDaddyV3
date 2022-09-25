@@ -7,8 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using RaidDaddy.Data;
 using RaidDaddy.Data.Repositories;
 using RaidDaddy.Entities;
+using RaidDaddy.Modules.Guardian;
 using RaidDaddy.Entities.Roles;
 using RaidDaddy.Modules.Raid;
+using RaidDaddy.Modules.Role;
 using RaidDaddy.Modules.Roles;
 
 namespace RaidDaddy;
@@ -22,6 +24,7 @@ public sealed class Bot
     
     private FireteamRepository _ftRepo;
     private RaiderRepository _rdRepo;
+    private RaiderRoleRepository _rdrRepo;
     private RoleCategoryRepository _rcRepo;
     private RoleRepository _rRepo;
     
@@ -34,6 +37,8 @@ public sealed class Bot
         _db = new DataContext();
         _ftRepo = new FireteamRepository(_db);        
         _rdRepo = new RaiderRepository(_db);
+        _rdrRepo = new RaiderRoleRepository();
+        
         _rcRepo = new RoleCategoryRepository(_db);
         _rRepo = new RoleRepository(_db);
         _client = new DiscordClient(new DiscordConfiguration()
@@ -46,6 +51,7 @@ public sealed class Bot
         _serviceCollection = new ServiceCollection()
             .AddSingleton(_ftRepo)
             .AddSingleton(_rdRepo)
+            .AddSingleton(_rdrRepo)
             .AddSingleton(_rcRepo)
             .AddSingleton(_rRepo)
             .BuildServiceProvider();
@@ -75,6 +81,8 @@ public sealed class Bot
         _slash.RegisterCommands<KickRaid>(_guildId);
         _slash.RegisterCommands<SetGuardianInfo>(_guildId);
         _slash.RegisterCommands<SetTimeRaid>(_guildId);
+        _slash.RegisterCommands<StartCommand>(_guildId);
+        _slash.RegisterCommands<SetRaiderRole>(_guildId);
         _slash.RegisterCommands<RoleManagement>(_guildId);
         _slash.RegisterCommands<RoleCategoryManagement>(_guildId);
         
