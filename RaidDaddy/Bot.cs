@@ -7,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using RaidDaddy.Data;
 using RaidDaddy.Data.Repositories;
 using RaidDaddy.Entities;
+using RaidDaddy.Entities.Roles;
 using RaidDaddy.Modules.Raid;
+using RaidDaddy.Modules.Roles;
 
 namespace RaidDaddy;
 
@@ -20,6 +22,8 @@ public sealed class Bot
     
     private FireteamRepository _ftRepo;
     private RaiderRepository _rdRepo;
+    private RoleCategoryRepository _rcRepo;
+    private RoleRepository _rRepo;
     
     private const ulong _guildId = 887198526579281920;
 
@@ -30,16 +34,20 @@ public sealed class Bot
         _db = new DataContext();
         _ftRepo = new FireteamRepository(_db);        
         _rdRepo = new RaiderRepository(_db);
+        _rcRepo = new RoleCategoryRepository(_db);
+        _rRepo = new RoleRepository(_db);
         _client = new DiscordClient(new DiscordConfiguration()
         {
             Token = Environment.GetEnvironmentVariable("token"),
             TokenType = TokenType.Bot,
-            Intents = DiscordIntents.All
+            Intents = DiscordIntents.All,
         });
         
         _serviceCollection = new ServiceCollection()
             .AddSingleton(_ftRepo)
             .AddSingleton(_rdRepo)
+            .AddSingleton(_rcRepo)
+            .AddSingleton(_rRepo)
             .BuildServiceProvider();
 
         _slash = _client.UseSlashCommands(new SlashCommandsConfiguration()
@@ -51,6 +59,13 @@ public sealed class Bot
 
         await _client.ConnectAsync();
         
+        // Unregister all
+        // {
+        //     IReadOnlyList<DiscordApplicationCommand> i = await _client.GetGuildApplicationCommandsAsync(_guildId);
+        //     foreach (DiscordApplicationCommand x in i)
+        //         await _client.DeleteGuildApplicationCommandAsync(_guildId, x.Id);
+        // }
+        
         _slash.RegisterCommands<CreateRaid>(_guildId);
         _slash.RegisterCommands<DisbandRaid>(_guildId);
         _slash.RegisterCommands<JoinRaid>(_guildId);
@@ -60,6 +75,8 @@ public sealed class Bot
         _slash.RegisterCommands<KickRaid>(_guildId);
         _slash.RegisterCommands<SetGuardianInfo>(_guildId);
         _slash.RegisterCommands<SetTimeRaid>(_guildId);
+        _slash.RegisterCommands<RoleManagement>(_guildId);
+        _slash.RegisterCommands<RoleCategoryManagement>(_guildId);
         
         await Task.Delay(-1);
     }
