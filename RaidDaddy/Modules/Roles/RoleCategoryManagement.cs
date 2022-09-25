@@ -60,25 +60,20 @@ public class RoleCategoryManagement: ApplicationCommandModule
         await ctx.CreateResponseAsync("Category has been deleted", ephemeral: true);
     }
 
-    [SlashCommand("list", "List all the roles in a category")]
-    public async Task ListCommand(InteractionContext ctx,
-        [Option("name", "The name of the category")]
-        string name)
+    [SlashCommand("list", "List all the categories")]
+    public async Task ListCommand(InteractionContext ctx)
     {
-        if (!await _roleCategoryRepository.RoleCategoryWithNameExists(name))
-        {
-            await ctx.CreateResponseAsync("Category with that name does not exist", ephemeral: true);
-            return;
-        }
+        List<RoleCategory> roleCategories = await _roleCategoryRepository.GetRoleCategories();
         
-        RoleCategory category = await _roleCategoryRepository.GetRoleCategoryByName(name);
-        StringBuilder sb = new StringBuilder();
-        foreach (RoleCategoryEntry role in category.Entries)
-            sb.AppendLine($"- <@&{role.RoleId}>");
-        DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
-            .WithTitle($"Roles in category: {category.Name}")
-            .WithDescription(sb.ToString())
+        DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder()
+            .WithTitle("Categories")
             .WithColor(DiscordColor.Green);
-        await ctx.CreateResponseAsync(embed: embed.Build(), ephemeral: true);
+
+        StringBuilder sb = new();
+
+        foreach (RoleCategory category in roleCategories) sb.AppendLine($"- {category.Name}");
+
+        embedBuilder.WithDescription(sb.ToString());
+        await ctx.CreateResponseAsync(embed: embedBuilder.Build(), ephemeral: true);
     }
 }

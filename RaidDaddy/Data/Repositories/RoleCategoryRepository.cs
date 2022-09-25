@@ -22,6 +22,12 @@ public class RoleCategoryRepository
         return await _db.RoleCategories.Include(x=>x.Entries)
             .FirstOrDefaultAsync(x => x.Name == name);
     }
+
+    public async Task<List<RoleCategory>> GetRoleCategories()
+    {
+        return await _db.RoleCategories.Include(x=>x.Entries)
+            .ToListAsync();
+    }
     
     public async Task CreateRoleCategory(RoleCategory roleCategory)
     {
