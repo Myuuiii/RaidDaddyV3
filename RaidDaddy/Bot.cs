@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Text;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
@@ -62,6 +63,7 @@ public sealed class Bot
         });
 
         _client.MessageCreated += CheckMember;
+        _client.ComponentInteractionCreated += CheckInteraction;
 
         await _client.ConnectAsync();
         
@@ -87,6 +89,55 @@ public sealed class Bot
         _slash.RegisterCommands<RoleCategoryManagement>(_guildId);
         
         await Task.Delay(-1);
+    }
+
+    private async Task CheckInteraction(DiscordClient sender, ComponentInteractionCreateEventArgs componentInteraction)
+    {
+        if (componentInteraction.Id.StartsWith("role-select:"))
+        {
+            DiscordGuild guild = componentInteraction.Message.Channel.Guild;
+            DiscordMember member = await guild.GetMemberAsync(componentInteraction.User.Id);
+            
+            string roleCategoryName = componentInteraction.Id.Replace("role-select:", "");
+            RoleCategory roleCategory = await _rcRepo.GetRoleCategoryByName(roleCategoryName);
+            if (roleCategory == null)
+                return;
+
+            StringBuilder sb = new StringBuilder().AppendLine("```diff");
+            
+            foreach (ulong option in componentInteraction.Values.Select(ulong.Parse))
+            {
+                DiscordRole role = guild.GetRole(option);
+                
+                if (member.Roles.Contains(role)) continue;
+                
+                await member.GrantRoleAsync(role);
+                sb.AppendLine($"+ {role.Name}");
+            }
+            
+            
+            foreach (ulong option in roleCategory.Entries.Where(x => !componentInteraction.Values.Select(ulong.Parse).Contains(x.RoleId)).Select(x=>x.RoleId))
+            {
+                DiscordRole role = guild.GetRole(option);
+                
+                if (!member.Roles.Contains(role)) continue;
+                
+                await member.RevokeRoleAsync(role);
+                sb.AppendLine($"- {role.Name}");
+            }
+
+            sb.AppendLine("```");
+
+            DiscordEmbed embed = new DiscordEmbedBuilder()
+                .WithTitle("Roles updated")
+                .WithDescription(sb.ToString())
+                .Build();
+            await componentInteraction.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(embed).AsEphemeral());
+        }
+        else
+        {
+            return;
+        }
     }
 
     private async Task CheckMember(DiscordClient sender, MessageCreateEventArgs e)

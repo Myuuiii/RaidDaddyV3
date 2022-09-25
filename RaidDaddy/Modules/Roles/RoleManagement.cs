@@ -81,7 +81,7 @@ public class RoleManagement : ApplicationCommandModule
     {
         RoleCategory category = await _roleCategoryRepository.GetRoleCategoryByName(name);
         List<DiscordSelectComponentOption> componentOptions = (from role in category.Entries let discordRole = ctx.Guild.GetRole(role.RoleId) select new DiscordSelectComponentOption(discordRole.Name, role.RoleId.ToString(), role.Description, false)).ToList();
-        DiscordSelectComponent roleSelectComponent = new DiscordSelectComponent($"role-select:{name}", "Select your roles", componentOptions);
+        DiscordSelectComponent roleSelectComponent = new DiscordSelectComponent($"role-select:{name}", "Select your roles", componentOptions, false, 0, category.Entries.Count);
         
         DiscordMessageBuilder builder = new DiscordMessageBuilder();
         builder.AddComponents(new DiscordComponent[] {roleSelectComponent});
