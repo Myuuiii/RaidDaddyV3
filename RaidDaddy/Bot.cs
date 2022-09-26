@@ -30,7 +30,6 @@ public sealed class Bot
     private RoleRepository _rRepo;
     
     private const ulong _guildId = 887198526579281920;
-
     private static Task Main(string[] args) => new Bot().MainAsync();
 
     private async Task MainAsync()
